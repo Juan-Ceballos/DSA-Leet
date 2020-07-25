@@ -1,38 +1,37 @@
 import Foundation
 
 func merge(_ nums1: inout [Int], _ m: Int, _ nums2: [Int], _ n: Int) {
+    var index1 = m - 1
+    var index2 = n - 1
+    var targetIndex = nums1.count - 1
     
-    var c = (m + n) - 1
-    var i = m - 1
-    var j = n - 1
-    
-    print("hello")
-    while c >= 0 {
-        print(c)
-        print("in while")
-        print("i \(i)")
-        print("j \(j)")
-        
-        if nums2[j] > nums1[i]  {
-            print("a")
-            nums1[c] = nums2[j]
-            print("b")
-            j -= 1
-            print(nums1)
-        } else {
-            print("c")
-            nums1[c] = nums1[i]
-            print("d")
-            if i == 0 {
-                nums1[0] = nums2[0]
-            }
-            else {i -= 1}
-            print(nums1)
-            
+    while index1 >= 0 || index2 >= 0 {
+        defer {
+            targetIndex -= 1
         }
-        c -= 1
+        
+        if index2 < 0 {
+            nums1[targetIndex] = nums1[index1]
+            index1 -= 1
+            continue
+        }
+        
+        if index1 < 0 {
+            nums1[targetIndex] = nums2[index2]
+            index2 -= 1
+            continue
+        }
+        
+        if nums2[index2] >= nums1[index1] {
+            nums1[targetIndex] = nums2[index2]
+            index2 -= 1
+            continue
+        }
+        
+        nums1[targetIndex] = nums1[index1]
+        index1 -= 1
     }
 }
 
-var arr = [2,0]
-merge(&arr, 1, [1], 1)
+var mainArs = [2, 3, 5, 0, 0, 0]
+merge(&mainArs, 3, [2, 6, 8], 3)
